@@ -5,6 +5,24 @@ import numpy as np
 
 
 class StitchBoundary:
+    """
+    Base class for stitch boundary construct. By default it will only
+    create vertical and horizontal stitches (2D). This version of the
+    construct assumes positive integer lengths for the sutures and
+    spacing between them.
+
+    Sutures are represented as a series of points [[x_0, y_0], [x_1, y_1]]
+
+    :constraint X_CONSTRAINT:       Prevents stitches from start at the
+                                    zeroth or terminal locations along
+                                    the horizontal.
+    :constraint Y_CONSTRAINT:       Prevents stitches from start at the
+                                    zeroth or terminal locations along
+                                    the vertical.
+    :constraint SUTURE_CONSTRAINT:  Prevents sutures from being negative
+                                    and overlapping.
+    """
+
     class ConstraintNotSatisfiedError(Exception): pass
 
     X_CONSTRAINT = 2
@@ -20,6 +38,11 @@ class StitchBoundary:
         height: int,
         suture_len: int
     ) -> None:
+        """Construct.
+
+        Constrains input values and initializes vertical and horizontal
+        stitches according to the constraints.
+        """
         if width < self.X_CONSTRAINT:
             raise self.ConstraintNotSatisfiedError(
                 f'width must be greater than {self.X_CONSTRAINT}'
@@ -49,17 +72,21 @@ class StitchBoundary:
 
         self._init_sutures()
 
-    def _upper_lower_iter(self):
+    def _north_south_iter(self) -> None:
         raise NotImplementedError
 
-    def _left_right_iter(self):
+    def _west_east_iter(self) -> None:
         raise NotImplementedError
 
-    def _init_sutures(self):
+    def _init_sutures(self) -> None:
+        """
+        Make the basis set of sutures: North, South, West and East.
+        """
+
         self.sutures = []
 
-        # UPPER AND LOWER BOUNDARIES
-        for i in self._upper_lower_iter():
+        # North and South boundaries
+        for i in self._north_south_iter():
             self.sutures.append([
                 [i, self.y_0],
                 [i, self.y_0+self.suture_len]
@@ -69,8 +96,8 @@ class StitchBoundary:
                 [i, self.y_0+self.height-self.suture_len]
             ])
 
-        # LEFT AND RIGHT BOUNDARIES
-        for j in self._left_right_iter():
+        # West and East boundaries
+        for j in self._west_east_iter():
             self.sutures.append([
                 [self.x_0, j],
                 [self.x_0+self.suture_len, j]
@@ -80,7 +107,11 @@ class StitchBoundary:
                 [self.x_0+self.width-self.suture_len, j]
             ])
 
-    def visualize(self, grid=False):
+    def visualize(self, grid=False) -> None:
+        """
+        Plots sutures as a collection of points
+        and lines between them.
+        """
 
         sutures = np.array(self.sutures)
 
@@ -110,17 +141,22 @@ class StitchBoundary:
 
 
 class PStitchBoundary(StitchBoundary):
+    """
+    The + variant of a stitch boundary. Does not contain
+    diagonal sutures.
+    """
+
     X_CONSTRAINT = 2
     Y_CONSTRAINT = 2
 
-    def _upper_lower_iter(self):
+    def _north_south_iter(self):
         start = self.x_0+self.X_CONSTRAINT-1
         end = self.x_0+self.width-self.X_CONSTRAINT+2
 
         for i in range(start, end):
             yield i
 
-    def _left_right_iter(self):
+    def _west_east_iter(self):
         start = self.y_0+self.Y_CONSTRAINT-1
         end = self.y_0+self.height-self.Y_CONSTRAINT+2
 
@@ -129,14 +165,19 @@ class PStitchBoundary(StitchBoundary):
 
 
 class XStitchBoundary(StitchBoundary):
-    def _upper_lower_iter(self):
+    """
+    The x variant of a stitch boundary. Containts diagonal
+    sutures.
+    """
+
+    def _north_south_iter(self):
         start = self.x_0+self.X_CONSTRAINT
         end = self.x_0+self.width-self.X_CONSTRAINT+1
 
         for i in range(start, end):
             yield i
 
-    def _left_right_iter(self):
+    def _west_east_iter(self):
         start = self.y_0+self.Y_CONSTRAINT
         end = self.y_0+self.height-self.Y_CONSTRAINT+1
 
