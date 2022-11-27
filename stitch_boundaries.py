@@ -1,7 +1,7 @@
 from matplotlib.collections import LineCollection
-from argparse import ArgumentParser
+from numpy import array
+
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 class StitchBoundary:
@@ -113,7 +113,7 @@ class StitchBoundary:
         and lines between them.
         """
 
-        sutures = np.array(self.sutures)
+        sutures = array(self.sutures)
 
         lc = LineCollection(sutures, colors='black')
 
@@ -207,64 +207,4 @@ class XStitchBoundary(StitchBoundary):
         self._init_diagonals()
 
 
-def parse_cli_args():
-    parser = ArgumentParser()
-
-    parser.add_argument(
-        '-x',
-        type=int,
-        help='The initial X coordinate.',
-        default=0
-    )
-    parser.add_argument(
-        '-y',
-        type=int,
-        help='The initial Y coordinate.',
-        default=0
-    )
-    parser.add_argument(
-        '--height',
-        type=int,
-        help='The height of the stitch boundary.',
-        default=StitchBoundary.Y_CONSTRAINT
-    )
-    parser.add_argument(
-        '--width',
-        type=int,
-        help='The width of the stitch boundary.',
-        default=StitchBoundary.X_CONSTRAINT
-    )
-    parser.add_argument(
-        '--suture-len',
-        type=int,
-        help='The length of the sutures in the stitch boundary.',
-        default=StitchBoundary.SUTURE_CONSTRAINT
-    )
-    parser.add_argument(
-        '--type',
-        type=str,
-        help='The type of stitch boundary to make.',
-        choices=['x', '+'],
-        required=True
-    )
-    parser.add_argument('--grid', action='store_true', dest='grid')
-
-    return parser.parse_args()
-
-
-if __name__ == '__main__':
-    args = parse_cli_args()
-    params = {
-        'x_0': args.x,
-        'y_0': args.y,
-        'width': args.width,
-        'height': args.height,
-        'suture_len': args.suture_len
-    }
-
-    if args.type == 'x':
-        stitch_boundary = XStitchBoundary(**params)
-    elif args.type == '+':
-        stitch_boundary = PStitchBoundary(**params)
-
-    stitch_boundary.visualize(grid=args.grid)
+__all__ = ['PStitchBoundary', 'XStitchBoundary']
