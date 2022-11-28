@@ -96,17 +96,7 @@ if __name__ == '__main__':
     variant = args.variant
 
     params = params(args)
-    # params = {
-    #     'x_0': args.x,
-    #     'y_0': args.y,
-    #     'width': args.width,
-    #     'height': args.height,
-    #     'suture_len': args.suture_len
-    # }
-
-    # if type == 'band':
-    #     params['orientation'] = args.orientation
 
     stitch = DISPATCHER[type][variant](**params)
 
-    # stitch.visualize(grid=args.grid)
+    stitch.visualize(grid=args.grid)

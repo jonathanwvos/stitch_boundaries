@@ -115,9 +115,9 @@ class StitchBoundary:
 
         sutures = array(self.sutures)
 
-        lc = LineCollection(sutures, colors='black')
-
         fig, ax = plt.subplots()
+
+        lc = LineCollection(sutures, colors='black')
 
         # Add line segments
         ax.add_collection(lc)
