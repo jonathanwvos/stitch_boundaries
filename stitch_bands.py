@@ -1,5 +1,5 @@
-from stitch_boundaries import XStitchBoundary, PStitchBoundary
-from numpy import array, pi
+from stitch_boundaries import StitchBoundary, XStitchBoundary, PStitchBoundary
+from numpy import array
 from math import atan2
 from matplotlib.collections import LineCollection
 import matplotlib.pyplot as plt
@@ -13,7 +13,7 @@ ORIENTATION = {
 }
 
 
-class XStitchBand(XStitchBoundary):
+class StitchBand(StitchBoundary):
     def __init__(
         self,
         *,
@@ -67,32 +67,33 @@ class XStitchBand(XStitchBoundary):
 
         return inner_curve, outer_curve
 
+    def _add_line_segments(self, ax):
+        sutures = array(self.sutures)
+        inner_curve = array(self.inner_curve)
+        outer_curve = array(self.outer_curve)
+        
+        sutures_lc = LineCollection(sutures, colors='black')
+        ax.add_collection(sutures_lc)
+
+        inner_curve_lc = LineCollection(inner_curve, colors='red')
+        ax.add_collection(inner_curve_lc)
+
+        outer_curve_lc = LineCollection(outer_curve, colors='blue')
+        ax.add_collection(outer_curve_lc)
+
     def visualize(self, grid=False) -> None:
         """
         Plots sutures as a collection of points
         and lines between them.
         """
 
-        sutures = array(self.sutures)
-        inner_curve = array(self.inner_curve)
-        outer_curve = array(self.outer_curve)
-
         fig, ax = plt.subplots()
 
-        lc = LineCollection(sutures, colors='black')
-        ax.add_collection(lc)
-
-        lc = LineCollection(inner_curve, colors='red')
-        ax.add_collection(lc)
-
-        lc = LineCollection(outer_curve, colors='blue')
-        ax.add_collection(lc)
-
         # Add line segments
-        ax.add_collection(lc)
-        ax.autoscale()
+        self._add_line_segments(ax)
 
         # Add points
+        sutures = array(self.sutures)
         xy = sutures[:, 0]
         uv = sutures[:, 1]
         x = xy[:, 0]
@@ -108,7 +109,12 @@ class XStitchBand(XStitchBoundary):
 
         plt.show()
 
-class PStitchBand(PStitchBoundary):
+
+class XStitchBand(XStitchBoundary, StitchBand):
+    pass
+
+
+class PStitchBand(PStitchBoundary, StitchBand):
     pass
 
 

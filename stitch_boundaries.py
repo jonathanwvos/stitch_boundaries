@@ -107,21 +107,23 @@ class StitchBoundary:
                 [self.x_0+self.width-self.suture_len, j]
             ])
 
+    def _add_line_segments(self, ax):
+        sutures = array(self.sutures)
+        lc = LineCollection(sutures, colors='black')
+        ax.add_collection(lc)
+
     def visualize(self, grid=False) -> None:
         """
         Plots sutures as a collection of points
         and lines between them.
         """
 
-        sutures = array(self.sutures)
-
         fig, ax = plt.subplots()
 
-        lc = LineCollection(sutures, colors='black')
+        sutures = array(self.sutures)
 
         # Add line segments
-        ax.add_collection(lc)
-        ax.autoscale()
+        self._add_line_segments(ax)
 
         # Add points
         xy = sutures[:, 0]
