@@ -23,7 +23,8 @@ class StitchBoundary:
                                     and overlapping.
     """
 
-    class ConstraintNotSatisfiedError(Exception): pass
+    class ConstraintNotSatisfiedError(Exception):
+        pass
 
     X_CONSTRAINT = 2
     Y_CONSTRAINT = 2

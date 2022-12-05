@@ -1,7 +1,8 @@
-from stitch_boundaries import StitchBoundary, XStitchBoundary, PStitchBoundary
-from numpy import array
 from math import atan2
 from matplotlib.collections import LineCollection
+from numpy import array
+from stitch_boundaries import StitchBoundary, XStitchBoundary, PStitchBoundary
+
 import matplotlib.pyplot as plt
 
 
@@ -71,7 +72,7 @@ class StitchBand(StitchBoundary):
         sutures = array(self.sutures)
         inner_curve = array(self.inner_curve)
         outer_curve = array(self.outer_curve)
-        
+
         sutures_lc = LineCollection(sutures, colors='black')
         ax.add_collection(sutures_lc)
 

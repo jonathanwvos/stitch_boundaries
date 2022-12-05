@@ -46,7 +46,7 @@ def parse_cli_args():
         choices=['x', '+'],
         required=True
     )
-    
+
     subparsers = parser.add_subparsers(dest='type')
     band_parser = subparsers.add_parser('band')
     band_parser.add_argument(
