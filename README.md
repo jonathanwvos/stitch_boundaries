@@ -8,18 +8,36 @@ Presently, there are two main variants of a stitch boundary: The $+$ variant and
 <br>
 
 # Stitch Boundaries
-In formaly writing, the two variants take on the notation from before. In code, the $+$ variant stitch boundary takes on the notation PStitchBoundary. Similarly, the $\times$ variant stitch boundary takes on the notation XStitchBoundary.
+In formaly writing, the two variants take on the notation from before. In code, the $+$ variant stitch boundary takes on the notation PStitchBoundary. Similarly, the $\times$ variant stitch boundary takes on the notation XStitchBoundary. Let every stitch boundary be divided into components categorized and named after the cardinal points and defined as follows:
+
+Let
+$$
+North(y_0, s_l, I) = \{((i, y_0), \; (i, y_0+s_l)) \; | \; i\in I \} \\
+South(y_0, \Delta{y}, s_l, I) = \{((i, y_0+\Delta{y}), \; (i, y_0 + \Delta{y} - s_l)) \; | \; i\in I\} \\
+West(x_0, s_l, J) = \{((x_0, j), \; (x_0 + s_l, j)) \; | \; j\in J\} \\
+East(x_0, \Delta{x}, s_l, J) = \{((x_0 + \Delta{x}, j), \; (x_0 + \Delta{x} - s_l, j)) \; | \; j\in J\}
+$$
+
+Where $x_0$ and $y_0$ are the inital points for $x$ and $y$, respectively. $\Delta{x}$ and $\Delta{y}$ are the width and height of the boundary, respectively. For some sets $I$ and $J$, dependent on the type of stitch boundary.
 
 ## PStitchBoundary
 A $+$ varient stitch boundary is the set:
-$+(x_0, y_0, \Delta{x}, \Delta{y}) = \{\}$
+$+(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = North(y_0, s_l, I) \;\cup\; South(y_0, \Delta{y}, s_l, I) \;\cup\; West(x_0, s_l, J) \;\cup\; East(x_0, \Delta{x}, s_l, J)$
 
-Where $x_0$ and $y_0$ are the inital points for $x$ and $y$, respectively. $\Delta{x}$ and $\Delta{y}$ are the width and height of the boundary, respectively.
+Where $I=[x_0 + 1, x_0 + \Delta{x})\subset\mathbb{Z}$ and $J=[y_0 + 1, y_0 + \Delta{y})\subset\mathbb{Z}$
 
 Visually, a $+$ variant expands in the following way:
-<img src="assets/PStitchBoundary_expansion.png" alt="PStitchBoundary Expansion" width="800">
+<!-- <img src="assets/PStitchBoundary_expansion.png" alt="PStitchBoundary Expansion" width="800"> -->
 
 ## XStitchBoundary
+In addition to the cardinal sets, a $\times$ variant stitch boundary also includes diagonal sutures:
+$$
+Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = \{ \\
+    ((x_0, y_0), (x_0 + s_l, y_0 + s_l)), \\
+    ((x_0+\Delta{x}, y_0), (x_0+\Delta{x}-s_l, y_0+s_l)), \\
+    ((x_0, y_0 + \Delta{y}),(x_0 + s_l, y_0 + \Delta{y} - s_l)), \\
+    ((x_0 + \Delta{x}, y_0 + \Delta{y}), (x_0 + \Delta{x} - s_l, y_0 + \Delta{y} - s_l))\}
+$$
 An $\times$ varient stitch boundary is the set:
 $\times(x_0, y_0, \Delta{x}, \Delta{y}) = \{\}$
 
