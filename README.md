@@ -43,8 +43,7 @@ When superimposed over a grid, it may look like the following:
 
 ## XStitchBoundary
 In addition to the cardinal sets, a $\times$ variant stitch boundary also includes diagonal sutures:
-Let $Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = \{ ((x_0, y_0), (x_0 + s_l, y_0 + s_l)),  ((x_0+\Delta{x}, y_0), (x_0+\Delta{x}-s_l, y_0+s_l)),  ((x_0, y_0 + \Delta{y}),(x_0 + s_l, y_0 + \Delta{y} - s_l)),  ((x_0 + \Delta{x}, y_0 + \Delta{y}), (x_0 + \Delta{x} - s_l, y_0 + \Delta{y} - s_l)) \}
-$
+Let: $Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = \{ ((x_0, y_0), (x_0 + s_l, y_0 + s_l)),  ((x_0+\Delta{x}, y_0), (x_0+\Delta{x}-s_l, y_0+s_l)),  ((x_0, y_0 + \Delta{y}),(x_0 + s_l, y_0 + \Delta{y} - s_l)),  ((x_0 + \Delta{x}, y_0 + \Delta{y}), (x_0 + \Delta{x} - s_l, y_0 + \Delta{y} - s_l)) \}$
 
 Thus an $\times$ varient stitch boundary is the set:
 $\times(x_0, y_0, \Delta{x}, \Delta{y}) = North(y_0, s_l, I) \cup South(y_0, \Delta{y}, s_l, I) \cup West(x_0, s_l, J) \cup East(x_0, \Delta{x}, s_l, J) \cup Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l)$
