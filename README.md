@@ -12,13 +12,13 @@ In formaly writing, the two variants take on the notation from before. In code, 
 
 Let:
 
-$North(y_0, s_l, I) = \{((i, y_0), \; (i, y_0+s_l)) \; | \; i\in I \}$
+$North(y_0, s_l, I) = \{((i, y_0),(i, y_0+s_l))|i\in I \}$
 
-$South(y_0, \Delta{y}, s_l, I) = \{((i, y_0+\Delta{y}), \; (i, y_0 + \Delta{y} - s_l)) \; | \; i\in I\}$
+$South(y_0, \Delta{y}, s_l, I) = \{((i, y_0+\Delta{y}),(i, y_0 + \Delta{y} - s_l))|i\in I\}$
 
-$West(x_0, s_l, J) = \{((x_0, j), \; (x_0 + s_l, j)) \; | \; j\in J\}$
+$West(x_0, s_l, J) = \{((x_0, j),(x_0 + s_l, j))|j\in J\}$
 
-$East(x_0, \Delta{x}, s_l, J) = \{((x_0 + \Delta{x}, j), \; (x_0 + \Delta{x} - s_l, j)) \; | \; j\in J\}$
+$East(x_0, \Delta{x}, s_l, J) = \{((x_0 + \Delta{x}, j),(x_0 + \Delta{x} - s_l, j))|j\in J\}$
 
 Where $x_0$ and $y_0$ are the inital points for $x$ and $y$, respectively. $\Delta{x}$ and $\Delta{y}$ are the width and height of the boundary, respectively. For some sets $I$ and $J$, dependent on the type of stitch boundary.
 
@@ -26,7 +26,7 @@ Where $x_0$ and $y_0$ are the inital points for $x$ and $y$, respectively. $\Del
 
 ## PStitchBoundary
 A $+$ varient stitch boundary is the set:
-$+(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = North(y_0, s_l, I) \;\cup\; South(y_0, \Delta{y}, s_l, I) \;\cup\; West(x_0, s_l, J) \;\cup\; East(x_0, \Delta{x}, s_l, J)$
+$+(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = North(y_0, s_l, I) \cup South(y_0, \Delta{y}, s_l, I) \cup West(x_0, s_l, J) \cup East(x_0, \Delta{x}, s_l, J)$
 
 Where $I=[x_0 + 1, x_0 + \Delta{x})\subset\mathbb{Z}$ and $J=[y_0 + 1, y_0 + \Delta{y})\subset\mathbb{Z}$
 
@@ -43,16 +43,11 @@ When superimposed over a grid, it may look like the following:
 
 ## XStitchBoundary
 In addition to the cardinal sets, a $\times$ variant stitch boundary also includes diagonal sutures:
-Let $Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = \{ \\
-    ((x_0, y_0), (x_0 + s_l, y_0 + s_l)), \\
-    ((x_0+\Delta{x}, y_0), (x_0+\Delta{x}-s_l, y_0+s_l)), \\
-    ((x_0, y_0 + \Delta{y}),(x_0 + s_l, y_0 + \Delta{y} - s_l)), \\
-    ((x_0 + \Delta{x}, y_0 + \Delta{y}), (x_0 + \Delta{x} - s_l, y_0 + \Delta{y} - s_l))\\
-\}
+Let $Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l) = \{ ((x_0, y_0), (x_0 + s_l, y_0 + s_l)),  ((x_0+\Delta{x}, y_0), (x_0+\Delta{x}-s_l, y_0+s_l)),  ((x_0, y_0 + \Delta{y}),(x_0 + s_l, y_0 + \Delta{y} - s_l)),  ((x_0 + \Delta{x}, y_0 + \Delta{y}), (x_0 + \Delta{x} - s_l, y_0 + \Delta{y} - s_l)) \}
 $
 
 Thus an $\times$ varient stitch boundary is the set:
-$\times(x_0, y_0, \Delta{x}, \Delta{y}) = North(y_0, s_l, I) \;\cup\; South(y_0, \Delta{y}, s_l, I) \;\cup\; West(x_0, s_l, J) \;\cup\; East(x_0, \Delta{x}, s_l, J) \;\cup\; Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l)$
+$\times(x_0, y_0, \Delta{x}, \Delta{y}) = North(y_0, s_l, I) \cup South(y_0, \Delta{y}, s_l, I) \cup West(x_0, s_l, J) \cup East(x_0, \Delta{x}, s_l, J) \cup Diag(x_0, y_0, \Delta{x}, \Delta{y}, s_l)$
 
 Where $I=[x_0 + 2, x_0 + \Delta{x} - 1)\subset\mathbb{Z}$ and $J=[y_0 + 2, y_0 + \Delta{y} - 1)\subset\mathbb{Z}$
 
